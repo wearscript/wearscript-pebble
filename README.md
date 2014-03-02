@@ -8,5 +8,4 @@
     ```
     pebble install --phone [ip address]
     ```
-* Android app requires Pebble-Kit library
-
+* Android Client shows toasts of button presses

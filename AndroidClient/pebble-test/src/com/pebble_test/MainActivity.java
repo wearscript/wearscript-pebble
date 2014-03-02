@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
+import android.widget.Toast;
 
 import com.getpebble.android.kit.PebbleKit;
 import com.getpebble.android.kit.util.PebbleDictionary;
@@ -61,20 +62,28 @@ public class MainActivity extends Activity {
                         // watch-app which will cause the watch to feel "laggy" during periods of frequent
                         // communication.
                         PebbleKit.sendAckToPebble(context, transactionId);
-                        
+                        Toast toast;
                         switch (cmd) {
                             // send SMS when the up button is pressed
                             case CMD_UP:
                             	Log.v(getLocalClassName(), "UP");
+                            	toast = Toast.makeText(context, "UP", Toast.LENGTH_SHORT);
+                            	toast.show();
                                 break;
                             case CMD_DOWN:
                             	Log.v(getLocalClassName(), "DOWN");
+                            	toast = Toast.makeText(context, "DOWN", Toast.LENGTH_SHORT);
+                            	toast.show();
                             	break;
                             case CMD_SELECT:
                             	Log.v(getLocalClassName(), "SELECT");
+                            	toast = Toast.makeText(context, "SELECT", Toast.LENGTH_SHORT);
+                            	toast.show();
                             	break;
                             case CMD_MULTI_SELECT:
                             	Log.v(getLocalClassName(), "MULTISELECT");
+                            	toast = Toast.makeText(context, "MULTISELECT", Toast.LENGTH_SHORT);
+                            	toast.show();
                             	break;
                             default:
                                 break;

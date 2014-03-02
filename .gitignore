@@ -1,0 +1,14 @@
+# Pebble
+Build
+
+# Android
+*.apk
+*.ap_
+*.dex
+*.class
+bin/
+gen/
+.gradle/
+build/
+local.properties
+progaurd/

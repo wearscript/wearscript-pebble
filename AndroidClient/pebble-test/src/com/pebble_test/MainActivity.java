@@ -52,9 +52,7 @@ public class MainActivity extends Activity {
             @Override
             public void receiveData(final Context context, final int transactionId, final PebbleDictionary data) {
                 final int cmd = data.getUnsignedInteger(CMD_KEY).intValue();
-            	//Log.i(getLocalClassName(), "Received value=" + data.getString(0xabbababe) + " for key: 0");
-            	
-            	
+
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -64,7 +62,6 @@ public class MainActivity extends Activity {
                         PebbleKit.sendAckToPebble(context, transactionId);
                         Toast toast;
                         switch (cmd) {
-                            // send SMS when the up button is pressed
                             case CMD_UP:
                             	Log.v(getLocalClassName(), "UP");
                             	toast = Toast.makeText(context, "UP", Toast.LENGTH_SHORT);

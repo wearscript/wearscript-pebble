@@ -12,6 +12,10 @@ static TextLayer *text_layer_x;
 static TextLayer *text_layer_y;
 static TextLayer *text_layer_z;
 
+char bufx[1024];
+char bufy[1024];
+char bufz[1024];
+
 static void send_message(uint32_t CMD) {
   DictionaryIterator *iter;
   app_message_outbox_begin(&iter);
@@ -75,8 +79,15 @@ static void accel_tap_handler(AccelAxisType axis, int32_t direction) {
   // Send data to phone
 }
 
+
 static void accel_data_handler(AccelData *data, uint32_t num_samples) {
-  // Send data to phone
+  snprintf(bufx, 100,  "%d", data[0].x);
+  snprintf(bufy, 100,  "%d", data[0].y);
+  snprintf(bufz, 100,  "%d", data[0].z);
+  
+  text_layer_set_text(text_layer_x, bufx);
+  text_layer_set_text(text_layer_y, bufy);
+  text_layer_set_text(text_layer_z, bufz);
 }
 
 static void window_load(Window *window) {
@@ -121,7 +132,7 @@ static void init(void) {
   const uint32_t outbound_size = 64;
   app_message_open(inbound_size, outbound_size);
 
-  // Accelerometer suscriber
+  // Accelerometer subscriber
   accel_tap_service_subscribe(&accel_tap_handler);
   accel_data_service_subscribe(10, &accel_data_handler);
 

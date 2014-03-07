@@ -8,6 +8,9 @@ static const uint32_t CMD_MULTI_SELECT = 0x03;
 
 static Window *window;
 static TextLayer *text_layer;
+static TextLayer *text_layer_x;
+static TextLayer *text_layer_y;
+static TextLayer *text_layer_z;
 
 static void send_message(uint32_t CMD) {
   DictionaryIterator *iter;
@@ -16,6 +19,7 @@ static void send_message(uint32_t CMD) {
   app_message_outbox_send();
 }
 
+// Click Handlers
 static void select_click_handler(ClickRecognizerRef recognizer, void *context) {
   text_layer_set_text(text_layer, "Select");
   send_message(CMD_SELECT);
@@ -36,6 +40,7 @@ static void select_multi_click_handler(ClickRecognizerRef recognizer, void *cont
   send_message(CMD_MULTI_SELECT);
 }
 
+// Configure click handlers
 static void click_config_provider(void *context) {
   window_single_click_subscribe(BUTTON_ID_SELECT, select_click_handler);
   window_single_click_subscribe(BUTTON_ID_UP, up_click_handler);
@@ -43,6 +48,7 @@ static void click_config_provider(void *context) {
   window_multi_click_subscribe(BUTTON_ID_SELECT, 2, 10, 100, true, select_multi_click_handler);
 }
 
+// Message handlers
 void out_sent_handler(DictionaryIterator *sent, void *context) {
   // outgoing message was delivered
   text_layer_set_text(text_layer, "Pass");
@@ -64,14 +70,41 @@ void in_dropped_handler(AppMessageResult reason, void *context) {
   // incoming message dropped
 }
 
+// Accelerometer handlers
+static void accel_tap_handler(AccelAxisType axis, int32_t direction) {
+  // Send data to phone
+}
+
+static void accel_data_handler(AccelData *data, uint32_t num_samples) {
+  // Send data to phone
+}
+
 static void window_load(Window *window) {
   Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_bounds(window_layer);
 
-  text_layer = text_layer_create((GRect) { .origin = { 0, 72 }, .size = { bounds.size.w, 20 } });
+  text_layer = text_layer_create((GRect) { .origin = { 0, 0 }, .size = { bounds.size.w, 20 } });
   text_layer_set_text(text_layer, "Press a button");
   text_layer_set_text_alignment(text_layer, GTextAlignmentCenter);
   layer_add_child(window_layer, text_layer_get_layer(text_layer));
+
+  // XYZ for accelerometer
+  text_layer_x = text_layer_create((GRect) { .origin = { 0, 27}, .size = { bounds.size.w, 20 } });
+  text_layer_set_text(text_layer_x, "this is x");
+  text_layer_set_text_alignment(text_layer_x, GTextAlignmentCenter);
+  layer_add_child(window_layer, text_layer_get_layer(text_layer_x));
+
+  text_layer_y = text_layer_create((GRect) { .origin = { 0, 54 }, .size = { bounds.size.w, 20} });
+  text_layer_set_text(text_layer_y, "this is y");
+  text_layer_set_text_alignment(text_layer_y, GTextAlignmentCenter);
+  layer_add_child(window_layer, text_layer_get_layer(text_layer_y));
+  
+
+  text_layer_z = text_layer_create((GRect) { .origin = { 0,  81}, .size = { bounds.size.w, 20} });
+  text_layer_set_text(text_layer_z, "this is y");
+  text_layer_set_text_alignment(text_layer_z, GTextAlignmentCenter);
+  layer_add_child(window_layer, text_layer_get_layer(text_layer_z));
+  
 }
 
 static void window_unload(Window *window) {
@@ -79,6 +112,7 @@ static void window_unload(Window *window) {
 }
 
 static void init(void) {
+  // Communication with android app
   app_message_register_inbox_received(in_received_handler);
   app_message_register_inbox_dropped(in_dropped_handler);
   app_message_register_outbox_sent(out_sent_handler);
@@ -86,6 +120,10 @@ static void init(void) {
   const uint32_t inbound_size = 64;
   const uint32_t outbound_size = 64;
   app_message_open(inbound_size, outbound_size);
+
+  // Accelerometer suscriber
+  accel_tap_service_subscribe(&accel_tap_handler);
+  accel_data_service_subscribe(10, &accel_data_handler);
 
   window = window_create();
   window_set_click_config_provider(window, click_config_provider);
@@ -99,6 +137,8 @@ static void init(void) {
 
 static void deinit(void) {
   window_destroy(window);
+  accel_tap_service_unsubscribe();
+  accel_data_service_unsubscribe();
 }
 
 int main(void) {

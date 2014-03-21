@@ -1,8 +1,8 @@
 {
-  "uuid": "133215f0-cf20-4c05-997b-3c9be5a64e5b",
-  "shortName": "Simply.js",
-  "longName": "Simply.js",
-  "companyName": "Meiguro",
+  "uuid": "88c99af8-9512-4e23-b79e-ba437c788446",
+  "shortName": "ws-pebble",
+  "longName": "wearscript-pebble",
+  "companyName": "",
   "versionCode": 1,
   "versionLabel": "0.3.2",
   "capabilities": [ "configurable" ],
@@ -21,11 +21,6 @@
         "type": "png",
         "name": "IMAGE_LOGO_SPLASH",
         "file": "images/logo_splash.png"
-      }, {
-        "type": "font",
-        "name": "MONO_FONT_14",
-        "file": "fonts/UbuntuMono-regular.ttf"
-      }
-    ]
+      }    ]
   }
 }

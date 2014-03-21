@@ -25,11 +25,6 @@ static SimplyStyle STYLES[] = {
     .subtitle_font = FONT_KEY_GOTHIC_28,
     .body_font = FONT_KEY_GOTHIC_24_BOLD,
   },
-  {
-    .title_font = FONT_KEY_GOTHIC_24_BOLD,
-    .subtitle_font = FONT_KEY_GOTHIC_18_BOLD,
-    .custom_body_font_id = RESOURCE_ID_MONO_FONT_14,
-  },
 };
 
 SimplyUi *s_ui = NULL;
@@ -227,9 +222,9 @@ static void show_welcome_text(SimplyUi *self) {
     return;
   }
 
-  simply_ui_set_text(self, &self->title_text, "Simply.js");
+  simply_ui_set_text(self, &self->title_text, "Wearscript Pebble");
   simply_ui_set_text(self, &self->subtitle_text, "Write apps with JS!");
-  simply_ui_set_text(self, &self->body_text, "Visit simplyjs.io for details.");
+  simply_ui_set_text(self, &self->body_text, "Visit wearscript.com to learn more.");
 
   simply_ui_show(self);
 }

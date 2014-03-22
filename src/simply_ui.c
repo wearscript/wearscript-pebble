@@ -224,7 +224,7 @@ static void show_welcome_text(SimplyUi *self) {
 
   simply_ui_set_text(self, &self->title_text, "Wearscript Pebble");
   simply_ui_set_text(self, &self->subtitle_text, "Write apps with JS!");
-  simply_ui_set_text(self, &self->body_text, "Visit wearscript.com to learn more.");
+  simply_ui_set_text(self, &self->body_text, "wearscript.com");
 
   simply_ui_show(self);
 }
@@ -252,7 +252,7 @@ static void window_load(Window *window) {
 
   simply_ui_set_style(self, 1);
 
-  app_timer_register(10000, (AppTimerCallback) show_welcome_text, self);
+  app_timer_register(10, (AppTimerCallback) show_welcome_text, self);
 }
 
 static void window_unload(Window *window) {
@@ -301,6 +301,8 @@ SimplyUi *simply_ui_create(void) {
   });
 
   window_load(self->window);
+
+  simply_ui_show(self);
 
   return self;
 }

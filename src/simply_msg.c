@@ -32,12 +32,6 @@ enum VibeType {
   VibeDouble = 2,
 };
 
-static void check_splash(Simply *simply) {
-  if (simply->splash) {
-    simply_ui_show(simply->ui);
-  }
-}
-
 static void handle_set_text(DictionaryIterator *iter, Simply *simply) {
   SimplyUi *ui = simply->ui;
   Tuple *tuple;
@@ -54,8 +48,6 @@ static void handle_set_text(DictionaryIterator *iter, Simply *simply) {
   if ((tuple = dict_find(iter, 3)) || clear) {
     simply_ui_set_text(ui, &ui->body_text, tuple ? tuple->value->cstring : NULL);
   }
-
-  check_splash(simply);
 }
 
 static void handle_vibe(DictionaryIterator *iter, Simply *simply) {
@@ -171,8 +163,6 @@ static void failed_callback(DictionaryIterator *iter, AppMessageResult reason, S
   if (reason == APP_MSG_NOT_CONNECTED) {
     simply_ui_set_text(ui, &ui->subtitle_text, "Disconnected");
     simply_ui_set_text(ui, &ui->body_text, "Run the Pebble Phone App");
-
-    check_splash(simply);
   }
 }
 

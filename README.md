@@ -1,6 +1,7 @@
 # Wearscript Pebble
 #### Forked from meiguro/simplyjs
 ### Installation insttructions
+* [wearscript-pebble api docs](http://www.wearscript.com/en/latest/pebble.html)
 * Prerequisites
     [Pebble Getting Started](https://developer.getpebble.com/2/getting-started/)
     * Install Pebble SDK
@@ -16,4 +17,6 @@
     ```
     pebble install --phone [ip address]
     ```
-* [wearscript-pebble docs](http://www.wearscript.com/en/latest/pebble.html)
+* Alternative install
+    * Copy wearscript-pebble-[version].pbw from release/ folder to device (e.g. dropbox, drive, adb)
+    * Download to device, and open .pbw file.
